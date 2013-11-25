@@ -4,7 +4,6 @@
 @ Notes:
 @ Pushing registers r4-r11 on stack avoids Fatal signal 11 with code=1
 @ This is simple version without conversion to natural grayscale
-@ as there's no big difference
 	.text
 	.align	2
 	.global	Grayscale
@@ -12,7 +11,7 @@
 Grayscale:
 										@Convert to grayscale
 	stmfd	sp!, {fp,ip,lr}
-										@r0 - pointer
+										@r0 - image pointer
 										@r1 - pixels' count
 										@r2 - pixel size
 
@@ -20,17 +19,17 @@ Grayscale:
 grayscale_loop:
 	ldr r3, [r0]						@load pixel from memory
 @-------------------------------------------------------------------
-										@summing pixels
-										@Pixel structure BGRA_8888
-	mov r4, r3, lsr #16					@extract blue value
+								@summing pixels
+								@Pixel structure BGRA_8888
+	mov r4, r3, lsr #16			@extract blue value
 	and r4, r4, #255
 
-	mov r5, r3, lsr #8					@extract green value
+	mov r5, r3, lsr #8			@extract green value
 	and r5, r5, #255
 
-	and r3, r3, #255					@extract red value
+	and r3, r3, #255			@extract red value
 
-	add r3, r3, r4						@sum pixel channel values
+	add r3, r3, r4				@sum pixel channel values
 	add r3, r3, r5
 
 @*******************************************************************
@@ -67,20 +66,15 @@ grayscale_loop:
 		mov r3, r0		@place result in r3
 		pop {r0-r2}		@restore r3
 @*******************************************************************
-	@and r4, r3, lsl #16		@set blue channel value
-	@and r5, r3, lsl #8		@set green channel value
-	@add r3, r3, r4			@create grayscaled pixel
-	@add r3, r3, r5
-	mov r4, r3, lsl #8
-	mov r5, r3, lsl #16
-	add r3, r3, r4
-	add r3, r3, r5
+	mov r4, r3, lsl #8		@set green channel
+	mov r5, r3, lsl #16		@set blue channel
+	add r3, r3, r4			@create pixel in grayscale
+	add r3, r3, r5			@from newly set channels
 @-------------------------------------------------------------------
-	str r3, [r0]						@store pixel in memory
-	add r0, r0, r2						@move pointer at next pixel
-	subs r1, r1, #1
-						@compare
-	bne grayscale_loop 					@iterate until all elements passed
+	str r3, [r0]			@store pixel in memory
+	add r0, r0, r2			@move pointer at next pixel
+	subs r1, r1, #1			@decrease and compare if equal zero
+	bne grayscale_loop 		@iterate until all elements passed
 
 
 	pop {r4-r11}
