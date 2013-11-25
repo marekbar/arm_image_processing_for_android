@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Przetwarzanie obrazu</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="lena">Ustaw obrazek domyślny</string>
+    <string name="changeFile">Zmień plik</string>
+    <string name="toGray">Konwertuj obraz na skalę szarości</string>
+    <string name="testCode">Testuj kod</string>
+    <string name="leaveRed">Pozostaw czerwony</string>
+    <string name="leaveGreen">Pozostaw zielony</string>
+    <string name="leaveBlue">Pozostaw niebieski</string>
+    <string name="noRed">Usuń czerwony</string>
+    <string name="noGreen">Usuń zielony</string>
+    <string name="noBlue">Usuń niebieski</string>
+    <string name="addFrame">Dodaj obramowanie</string>
+    <string name="connectToCamera">Podłącz kamerę</string>
+    <string name="labelUpsideDown">Do góry nogami</string>
+</resources>
