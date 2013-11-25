@@ -21,6 +21,7 @@ grayscale_loop:
 	ldr r3, [r0]						@load pixel from memory
 @-------------------------------------------------------------------
 										@summing pixels
+										@Pixel structure BGRA_8888
 	mov r4, r3, lsr #16					@extract blue value
 	and r4, r4, #255
 
@@ -66,9 +67,13 @@ grayscale_loop:
 		mov r3, r0		@place result in r3
 		pop {r0-r2}		@restore r3
 @*******************************************************************
-	and r4, r3, lsl #16		@set blue channel value
-	and r5, r3, lsl #8		@set green channel value
-	add r3, r3, r4			@create grayscaled pixel
+	@and r4, r3, lsl #16		@set blue channel value
+	@and r5, r3, lsl #8		@set green channel value
+	@add r3, r3, r4			@create grayscaled pixel
+	@add r3, r3, r5
+	mov r4, r3, lsl #8
+	mov r5, r3, lsl #16
+	add r3, r3, r4
 	add r3, r3, r5
 @-------------------------------------------------------------------
 	str r3, [r0]						@store pixel in memory
