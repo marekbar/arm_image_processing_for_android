@@ -28,17 +28,19 @@ public class Main extends Activity
 	}
 
 	public native byte[] BitmapToGrayscale(byte[] bitmap, int bytes, int bytesPerPixel);
+	public native byte[] BitmapDetectEdges(byte[] bitmap, int imageWidth, int imageHeight, int bytesPerPixel);
 	public native byte[] BitmapColorManipulate(byte[] bitmap, int bytes, int bytesPerPixel, int option);
 	public native byte[] BitmapUpsideDown(byte[] bitmap, int bytesPerPixe, int width, int height);
 	public native byte[] BitmapAddBorder(byte[] bitmap, int[] args);
 	public native int Divide(int a, int b);
-
+	public native int SizeOfJByte();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		InitializeInterface();
+		App.info("Rozmiar jbyte to: " + String.valueOf(this.SizeOfJByte()));
 
 	}
 
@@ -63,7 +65,7 @@ public class Main extends Activity
 			image = BitmapFactory.decodeStream(getAssets().open("Lena.png"));
 		} catch (IOException e)
 		{
-			error("Nie za≈Çadowano domy≈õlnego obrazka - Lena");
+			error("Nie za≥adowano domyúlnego obrazka - Lena");
 		}
 		display.setImageBitmap(image);
 	}
@@ -96,7 +98,7 @@ public class Main extends Activity
 		if(image == null)
 		{
 			GetLenaBack();
-			info("Nie by≥o obrazu, ustawiono domy≈õlny.");
+			info("Nie by≥o obrazu, ustawiono domyúlny.");
 		}
 		ByteBuffer bb = ByteBuffer.allocate(image.getByteCount());
 		image.copyPixelsToBuffer(bb);
@@ -104,6 +106,23 @@ public class Main extends Activity
 		int pixels = image.getWidth()*image.getHeight();
 		int bytesPerPixel = bytesLength / pixels;
 		ByteBuffer result = ByteBuffer.wrap(this.BitmapColorManipulate(bb.array(), pixels, bytesPerPixel, option.ordinal()));
+		image.copyPixelsFromBuffer(result);
+		display.setImageBitmap(image);
+	}
+	
+	public void BitmapDetecEdges()
+	{
+		if(image == null)
+		{
+			GetLenaBack();
+			info("Nie by≥o obrazu, ustawiono domyúlny.");
+		}
+		ByteBuffer bb = ByteBuffer.allocate(image.getByteCount());
+		image.copyPixelsToBuffer(bb);
+		int bytesLength = image.getByteCount();
+		int pixels = image.getWidth()*image.getHeight();
+		int bytesPerPixel = bytesLength / pixels;
+		ByteBuffer result = ByteBuffer.wrap(this.BitmapDetectEdges(bb.array(), image.getWidth(), image.getHeight(), bytesPerPixel));
 		image.copyPixelsFromBuffer(result);
 		display.setImageBitmap(image);
 	}
@@ -180,7 +199,6 @@ public class Main extends Activity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		// Handle item selection
 		switch (item.getItemId())
 		{
 		case R.id.imageFromCamera:
@@ -188,6 +206,7 @@ public class Main extends Activity
 			return true;
 		case R.id.DefaultPhoto:
 			GetLenaBack();
+			return true;
 		case R.id.imageLeaveRed:
 			ColorManipulate(ColorManipulateOption.OnlyRed);
 			return true;
@@ -211,6 +230,9 @@ public class Main extends Activity
 			return true;
 		case R.id.imgToGray:
 			ConvertImageToGrayscale();
+			return true;
+		case R.id.imageEdges:
+			BitmapDetecEdges();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

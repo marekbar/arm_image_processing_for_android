@@ -32,3 +32,32 @@ JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapUpsideDown(JNIEnv *env,
 	UpsideDown(pointer, pixelSize, width, height);
 	return bitmap;
 }
+
+JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapDetectEdges(JNIEnv *env, jobject obj, jbyteArray bitmap, jint imageWidth, jint imageHeight, jint bytesPerPixel)
+{
+	jbyte *bitmapPointer = (*env)->GetByteArrayElements(env, bitmap, 0);
+	Grayscale(bitmapPointer, imageWidth * imageHeight, bytesPerPixel);
+
+	jint oX[9] = {
+			-1, 0, 1,
+			-2, 0, 2,
+			-1, 0, 1
+	};
+	jint oY[9] = {
+			1, 2, 1,
+			0, 0, 0,
+			-1, -2, -1
+	};
+
+	jint imageDetails[3] = {imageWidth, imageHeight, bytesPerPixel};
+
+	ApplyKernel3x3(bitmapPointer, imageDetails, oX, 1);
+//	ThreshHold(bitmapPointer, imageWidth*imageHeight, bytesPerPixel, 127);
+	return bitmap;
+}
+
+JNIEXPORT jint JNICALL Java_pl_marekbar_Main_SizeOfJByte(JNIEnv *env, jobject obj)
+{
+	return sizeof(jint);
+}
+

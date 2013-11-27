@@ -15,4 +15,5 @@
     <string name="addFrame">Dodaj obramowanie</string>
     <string name="connectToCamera">Podłącz kamerę</string>
     <string name="labelUpsideDown">Do góry nogami</string>
+    <string name="getEdges">Wykryj krawędzie</string>
 </resources>
