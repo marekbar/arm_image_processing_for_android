@@ -14,23 +14,9 @@ JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapColorManipulate(JNIEnv 
 	return bitmap;
 }
 
-JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapAddBorder(JNIEnv * env, jobject obj, jbyteArray bitmap, jintArray args)
-{
-	jbyte *pointer = (*env)->GetByteArrayElements(env, bitmap, 0);
-	AddFrame(pointer, args);
-	return bitmap;
-}
-
 JNIEXPORT jint JNICALL Java_pl_marekbar_Main_Divide(JNIEnv *env, jobject obj, jint a, jint b)
 {
 	return divide(a,b);
-}
-
-JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapUpsideDown(JNIEnv *env, jobject obj, jbyteArray bitmap, jint pixelSize, jint width, jint height)
-{
-	jbyte *pointer = (*env)->GetByteArrayElements(env, bitmap, 0);
-	UpsideDown(pointer, pixelSize, width, height);
-	return bitmap;
 }
 
 JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapDetectEdges(JNIEnv *env, jobject obj, jbyteArray bitmap, jint imageWidth, jint imageHeight, jint bytesPerPixel)
@@ -56,8 +42,15 @@ JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapDetectEdges(JNIEnv *env
 	return bitmap;
 }
 
-JNIEXPORT jint JNICALL Java_pl_marekbar_Main_SizeOfJByte(JNIEnv *env, jobject obj)
+JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapMirrorX(JNIEnv *env, jobject obj, jbyteArray bitmap, jint bytesPerPixel, jint imageWidth, jint imageHeight)
 {
-	return sizeof(jint);
+	MirrorX((*env)->GetByteArrayElements(env, bitmap, 0), bytesPerPixel, imageWidth, imageHeight);
+	return bitmap;
+}
+
+JNIEXPORT jbyteArray JNICALL Java_pl_marekbar_Main_BitmapMirrorY(JNIEnv *env, jobject obj, jbyteArray bitmap, jint bytesPerPixel, jint imageWidth, jint imageHeight)
+{
+	MirrorY((*env)->GetByteArrayElements(env, bitmap, 0), bytesPerPixel, imageWidth, imageHeight);
+	return bitmap;
 }
 

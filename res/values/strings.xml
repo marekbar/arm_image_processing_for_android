@@ -16,4 +16,6 @@
     <string name="connectToCamera">Podłącz kamerę</string>
     <string name="labelUpsideDown">Do góry nogami</string>
     <string name="getEdges">Wykryj krawędzie</string>
+    <string name="mirrorLabelX">Odbij obraz według osi X</string>
+    <string name="mirrorLabelY">Odbij obraz według osi Y</string>
 </resources>

@@ -1,4 +1,7 @@
 @ This file is jni/ApplyKernel3x3.s
+@ Applying kernel at each pixel where kernel value is stored at 4-byte
+@ Kernel size is - width: 3 and heigh: 3
+@ Image pixel structure ABGR_8888
 @ Author: Marek Bar 33808
 @ mail: marekbar1985@gmail.com
 

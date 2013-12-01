@@ -2,7 +2,8 @@
 	<item android:id="@+id/DefaultPhoto" android:title="@string/lena"></item>
 	<item android:id="@+id/imgToGray" android:title="@string/toGray"></item>
 	<item android:id="@+id/imageEdges" android:title="@string/getEdges"></item>
-	
+	<item android:id="@+id/imageMirroX" android:title="@string/mirrorLabelX"></item>
+	<item android:id="@+id/imageMirroY" android:title="@string/mirrorLabelY"></item>
 	<item android:id="@+id/imageLeaveRed" android:title="@string/leaveRed"></item>
 	<item android:id="@+id/imageLeaveGreen" android:title="@string/leaveGreen"></item>
 	<item android:id="@+id/imageLeaveBlue" android:title="@string/leaveBlue"></item>

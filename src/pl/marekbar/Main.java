@@ -11,11 +11,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class Main extends Activity
 {
@@ -30,17 +28,15 @@ public class Main extends Activity
 	public native byte[] BitmapToGrayscale(byte[] bitmap, int bytes, int bytesPerPixel);
 	public native byte[] BitmapDetectEdges(byte[] bitmap, int imageWidth, int imageHeight, int bytesPerPixel);
 	public native byte[] BitmapColorManipulate(byte[] bitmap, int bytes, int bytesPerPixel, int option);
-	public native byte[] BitmapUpsideDown(byte[] bitmap, int bytesPerPixe, int width, int height);
-	public native byte[] BitmapAddBorder(byte[] bitmap, int[] args);
 	public native int Divide(int a, int b);
-	public native int SizeOfJByte();
-
+	public native byte[] BitmapMirrorX(byte[] bitmap, int bytesPerPixel, int imageWidth, int imageHeight);
+	public native byte[] BitmapMirrorY(byte[] bitmap, int bytesPerPixel, int imageWidth, int imageHeight);
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		InitializeInterface();
-		App.info("Rozmiar jbyte to: " + String.valueOf(this.SizeOfJByte()));
 
 	}
 
@@ -65,7 +61,7 @@ public class Main extends Activity
 			image = BitmapFactory.decodeStream(getAssets().open("Lena.png"));
 		} catch (IOException e)
 		{
-			error("Nie za³adowano domyœlnego obrazka - Lena");
+			App.error("Nie za³adowano domyœlnego obrazka - Lena");
 		}
 		display.setImageBitmap(image);
 	}
@@ -75,7 +71,7 @@ public class Main extends Activity
 		if(image == null)
 		{
 			GetLenaBack();
-			info("Nie byÅ‚o obrazu, ustawiono domyÅ›lny.");
+			App.info("Nie byÅ‚o obrazu, ustawiono domyÅ›lny.");
 		}
 		ByteBuffer bb = ByteBuffer.allocate(image.getByteCount());
 		image.copyPixelsToBuffer(bb);
@@ -98,7 +94,7 @@ public class Main extends Activity
 		if(image == null)
 		{
 			GetLenaBack();
-			info("Nie by³o obrazu, ustawiono domyœlny.");
+			App.info("Nie by³o obrazu, ustawiono domyœlny.");
 		}
 		ByteBuffer bb = ByteBuffer.allocate(image.getByteCount());
 		image.copyPixelsToBuffer(bb);
@@ -115,7 +111,7 @@ public class Main extends Activity
 		if(image == null)
 		{
 			GetLenaBack();
-			info("Nie by³o obrazu, ustawiono domyœlny.");
+			App.info("Nie by³o obrazu, ustawiono domyœlny.");
 		}
 		ByteBuffer bb = ByteBuffer.allocate(image.getByteCount());
 		image.copyPixelsToBuffer(bb);
@@ -126,37 +122,37 @@ public class Main extends Activity
 		image.copyPixelsFromBuffer(result);
 		display.setImageBitmap(image);
 	}
-
-	public void UpsideDown()
+	
+	public void MirrorX()
+	{
+		MirrorXY(false);
+	}
+	
+	public void MirrorY()
+	{
+		MirrorXY(true);
+	}
+	public void MirrorXY(boolean isY)
 	{
 		if(image == null)
 		{
 			GetLenaBack();
-			info("Nie by³‚o obrazu, ustawiono domyÅ›lny.");
+			App.info("Nie by³o obrazu, ustawiono domyœlny.");
 		}
 		ByteBuffer bb = ByteBuffer.allocate(image.getByteCount());
 		image.copyPixelsToBuffer(bb);
-		int bytesLength = image.getByteCount();
-		int pixels = image.getWidth()*image.getHeight();
-		int bytesPerPixel = bytesLength / pixels;
-		App.info("Szerokoœæ: " + String.valueOf(image.getWidth()));
-		App.info("Wysokoœæ: " + String.valueOf(image.getHeight()));
-		App.info("Liczba bajtów w pikselu: " + String.valueOf(bytesPerPixel));
-		ByteBuffer result = ByteBuffer.wrap(this.BitmapUpsideDown(bb.array(), bytesPerPixel, image.getWidth(), image.getHeight()));
-		image.copyPixelsFromBuffer(result);
+		int bytesPerPixel = image.getByteCount() / (image.getWidth() * image.getHeight());
+		if(isY)
+		{
+			image.copyPixelsFromBuffer(ByteBuffer.wrap(this.BitmapMirrorY(bb.array(), bytesPerPixel, image.getWidth(), image.getHeight())));
+			App.info("Odbicie wzglêdem osi Y");
+		}
+		else
+		{
+			image.copyPixelsFromBuffer(ByteBuffer.wrap(this.BitmapMirrorX(bb.array(), bytesPerPixel, image.getWidth(), image.getHeight())));
+			App.info("Odbicie wzglêdem osi X");
+		}
 		display.setImageBitmap(image);
-	}
-	public void AddFrame()
-	{
-		String wynik = "\n15/3 = " + String.valueOf(Divide(15,3)) + 
-				"\n15/0 = " + String.valueOf(Divide(15,0)) + 
-				"\n5/3 = " + String.valueOf(Divide(5,3)) + 
-				"\n0/3 = " + String.valueOf(Divide(0,3)) +
-				"\n0/0 = " + String.valueOf(Divide(0,0)) +
-				"\n1/1 = " + String.valueOf(Divide(1,1)) +
-				"\n3/3 = " + String.valueOf(Divide(3,3));
-		info(wynik);
-		Log.i("App", wynik);
 	}
 	
 	@Override
@@ -180,20 +176,10 @@ public class Main extends Activity
 					display.setImageBitmap(image);
 				} catch (FileNotFoundException e)
 				{
-					error("Nie odnalzeiono pliku.");
+					App.error("Nie odnalzeiono pliku.");
 				}
 			}
 		}
-	}
-
-	private void error(String msg)
-	{
-		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-	}
-
-	private void info(String msg)
-	{
-		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -225,14 +211,17 @@ public class Main extends Activity
 		case R.id.imageNoGreen:
 			ColorManipulate(ColorManipulateOption.NoGreen);
 			return true;
-		case R.id.upsideDown:
-			UpsideDown();
-			return true;
 		case R.id.imgToGray:
 			ConvertImageToGrayscale();
 			return true;
 		case R.id.imageEdges:
 			BitmapDetecEdges();
+			return true;
+		case R.id.imageMirroX:
+			this.MirrorX();
+			return true;
+		case R.id.imageMirroY:
+			this.MirrorY();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

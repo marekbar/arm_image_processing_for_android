@@ -1,10 +1,14 @@
+@ This file is jni/Divide.s
+@ Dividing number: result = a/b
+@ Author: Marek Bar 33808
+@ mail: marekbar1985@gmail.com
 	.text
 	.align 2
 	.global divide
 	.type divide, %function
-	@r0 - dzielna
-	@r1 - dzielnik
-	@r0 - iloraz
+	@r0 - number
+	@r1 - divider
+	@r0 - result
 divide:
 	stmfd sp!, {fp,ip,lr}
 	push {r0-r1}
