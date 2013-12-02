@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 	<item android:id="@+id/DefaultPhoto" android:title="@string/lena"></item>
+	<item android:id="@+id/takePhoto" android:title="@string/makePhoto"></item>
 	<item android:id="@+id/imgToGray" android:title="@string/toGray"></item>
 	<item android:id="@+id/imageEdges" android:title="@string/getEdges"></item>
 	<item android:id="@+id/imageMirroX" android:title="@string/mirrorLabelX"></item>
@@ -10,7 +11,6 @@
 	<item android:id="@+id/imageNoRed" android:title="@string/noRed"></item>
 	<item android:id="@+id/imageNoGreen" android:title="@string/noGreen"></item>
 	<item android:id="@+id/imageNoBlue" android:title="@string/noBlue"></item>
-	<item android:id="@+id/imageFromCamera" android:title="@string/connectToCamera"></item>
 	<item android:id="@+id/upsideDown" android:title="@string/labelUpsideDown"></item>
-	
+	<item android:id="@+id/saveWork" android:title="@string/save_work_label"></item>
 </menu>

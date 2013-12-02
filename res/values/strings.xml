@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Przetwarzanie obrazu</string>
     <string name="action_settings">Ustawienia</string>
     <string name="lena">Ustaw obrazek domyślny</string>
@@ -18,4 +19,12 @@
     <string name="getEdges">Wykryj krawędzie</string>
     <string name="mirrorLabelX">Odbij obraz według osi X</string>
     <string name="mirrorLabelY">Odbij obraz według osi Y</string>
+    <string name="makePhoto">Zrób zdjęcie</string>
+    <string name="title_activity_take_picture">TakePictureActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_photo_intent">PhotoIntentActivity</string>
+    <string name="no_default_photo">Nie załadowano domyślnego obrazka - Lena</string>
+    <string name="save_work_label">Zapisz</string>
+	<string name="photo_saved">Zdjęcie zostało zapisane do galerii</string>
+	<string name="photo_saved_failed">Zdjęcie nie zostało zapisane do galerii</string>
 </resources>

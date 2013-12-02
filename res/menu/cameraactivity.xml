@@ -1,8 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/caImageLeaveRed" android:title="@string/leaveRed"></item>
-	<item android:id="@+id/caImageLeaveGreen" android:title="@string/leaveGreen"></item>
-	<item android:id="@+id/caImageLeaveBlue" android:title="@string/leaveBlue"></item>
-	<item android:id="@+id/caImageNoRed" android:title="@string/noRed"></item>
-	<item android:id="@+id/caImageNoGreen" android:title="@string/noGreen"></item>
-	<item android:id="@+id/caImageNoBlue" android:title="@string/noBlue"></item>
-</menu>
