@@ -73,6 +73,7 @@ grayscale_loop:
 @-------------------------------------------------------------------
 	str r3, [r0]			@store pixel in memory
 	add r0, r0, r2			@move pointer at next pixel
+	add r11, r11, r2
 	subs r1, r1, #1			@decrease and compare if equal zero
 	bne grayscale_loop 		@iterate until all elements passed
 

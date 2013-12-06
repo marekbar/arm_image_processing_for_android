@@ -19,8 +19,8 @@ ApplyKernel3x3:
 										@r1 - image details array - each detail passed on 4 bytes
 										@width, height, pixel size
 										@r2 - kernal pointer
-										@r3 - divider after summing
-	mov r11, r3
+										@r3 - gray pointer
+	mov r12, r3
 	ldr r3, [r1]						@extract image width
 	push {r3}
 
@@ -153,11 +153,12 @@ saving:
 	mov r10, r11, lsl #8
 	add r11, r11, r9
 	add r11, r11, r10
-	str r11, [r0]						@store result of edging in memory
+	str r11, [r12]						@store result of edging in memory
 
 @-----------------------------------------------------------------
 finish:
 	add r0, r0, r1						@move pointer at next pixel
+	add r12, r12, r1
 	subs r5, r5, #1						@and one pixel less
 	bne kernel_pixels_loop 				@carry on with applying mask
 

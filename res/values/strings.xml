@@ -27,4 +27,6 @@
     <string name="save_work_label">Zapisz</string>
 	<string name="photo_saved">Zdjęcie zostało zapisane do galerii</string>
 	<string name="photo_saved_failed">Zdjęcie nie zostało zapisane do galerii</string>
+	<string name="edgeDetectionPrevitLabel">Wykrywanie krawędzi - Previtt</string>
+	<string name="edgeDetectionSobelLabel">Wykrywanie krawędzi - Sobel</string>
 </resources>

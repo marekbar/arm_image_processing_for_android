@@ -2,7 +2,6 @@
 	<item android:id="@+id/DefaultPhoto" android:title="@string/lena"></item>
 	<item android:id="@+id/takePhoto" android:title="@string/makePhoto"></item>
 	<item android:id="@+id/imgToGray" android:title="@string/toGray"></item>
-	<item android:id="@+id/imageEdges" android:title="@string/getEdges"></item>
 	<item android:id="@+id/imageMirroX" android:title="@string/mirrorLabelX"></item>
 	<item android:id="@+id/imageMirroY" android:title="@string/mirrorLabelY"></item>
 	<item android:id="@+id/imageLeaveRed" android:title="@string/leaveRed"></item>
@@ -13,4 +12,6 @@
 	<item android:id="@+id/imageNoBlue" android:title="@string/noBlue"></item>
 	<item android:id="@+id/upsideDown" android:title="@string/labelUpsideDown"></item>
 	<item android:id="@+id/saveWork" android:title="@string/save_work_label"></item>
+	<item android:id="@+id/edPrevit" android:titleCondensed="@string/edgeDetectionPrevitLabel" android:title="@string/edgeDetectionPrevitLabel"></item>
+	<item android:id="@+id/edSobel" android:titleCondensed="@string/edgeDetectionSobelLabel" android:title="@string/edgeDetectionSobelLabel"></item>
 </menu>

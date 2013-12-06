@@ -10,7 +10,9 @@ import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas.EdgeType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +26,7 @@ public class Main extends Activity
 	}
 
 	public native byte[] BitmapToGrayscale(byte[] bitmap, int bytes, int bytesPerPixel);
-	public native byte[] BitmapDetectEdges(byte[] bitmap, int imageWidth, int imageHeight, int bytesPerPixel);
+	public native byte[] BitmapDetectEdges(byte[] bitmap, int imageWidth, int imageHeight, byte[] gray, int option);
 	public native byte[] BitmapColorManipulate(byte[] bitmap, int bytes, int bytesPerPixel, int option);
 	public native int Divide(int a, int b);
 	public native byte[] BitmapMirrorX(byte[] bitmap, int bytesPerPixel, int imageWidth, int imageHeight);
@@ -102,9 +104,11 @@ public class Main extends Activity
 		image.copyPixelsFromBuffer(result);
 		display.setImageBitmap(image);
 	}
-	
-	public void BitmapDetecEdges()
+
+	public void BitmapDetecEdges(EdgeDetectionOption option)
 	{
+		try
+		{
 		if(image == null)
 		{
 			GetLenaBack();
@@ -113,11 +117,19 @@ public class Main extends Activity
 		ByteBuffer bb = ByteBuffer.allocate(image.getByteCount());
 		image.copyPixelsToBuffer(bb);
 		
-		int pixels = image.getWidth()*image.getHeight();
-		int bytesPerPixel = image.getByteCount() / pixels;
+		int w = image.getWidth();
+		int h = image.getHeight();
+		ByteBuffer gg = ByteBuffer.allocate(image.getByteCount());
+		image.copyPixelsToBuffer(gg);
 		
-		image.copyPixelsFromBuffer(ByteBuffer.wrap(BitmapDetectEdges(bb.array(), image.getWidth(), image.getHeight(), bytesPerPixel)));
+		bb = ByteBuffer.wrap(BitmapDetectEdges(bb.array(), w, h, gg.array(), option.ordinal()));
+		
+		image.copyPixelsFromBuffer(bb);
 		display.setImageBitmap(image);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void MirrorX()
@@ -184,8 +196,11 @@ public class Main extends Activity
 		case R.id.imgToGray:
 			ConvertImageToGrayscale();
 			return true;
-		case R.id.imageEdges:
-			BitmapDetecEdges();
+		case R.id.edPrevit:
+			BitmapDetecEdges(EdgeDetectionOption.Previtt);
+			return true;
+		case R.id.edSobel:
+			BitmapDetecEdges(EdgeDetectionOption.Sobel);
 			return true;
 		case R.id.imageMirroX:
 			this.MirrorX();

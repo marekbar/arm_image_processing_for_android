@@ -21,11 +21,11 @@ thresh_loop:
 	bl white_it
 
 black_it:
-	mov r5, #255
+	mov r5, #0
 	b end_thresh
 
 white_it:
-	mov r5, #0
+	mov r5, #255
 
 end_thresh:
 @*******************************************************************

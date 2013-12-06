@@ -9,6 +9,4 @@ public enum ColorManipulateOption
 	NoRed,//4
 	NoGreen,//5
 	NoBlue//6
-	
-
 }
